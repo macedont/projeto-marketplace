@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableStore extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,14 @@ class CreateTableStore extends Migration
      */
     public function up()
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
 
             $table->string('name');
-            $table->string('description');
-            $table->string('phone');
-            $table->string('mobile_phone');
+            $table->string('description')->nullable();
             $table->string('slug');
 
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users'); //noma da fk stores_user_id_foreign
         });
     }
 
@@ -36,6 +31,6 @@ class CreateTableStore extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('categories');
     }
 }

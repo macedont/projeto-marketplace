@@ -20,6 +20,10 @@ class UsersTableSeeder extends Seeder
             'created_at' => now()
         ]);*/
 
-        factory(\App\User::class, 40)->create();
+        factory(\App\User::class, 40)->create()->each(function ($user){
+            $user->store()->save(factory(\App\Store::class)->make());
+            //o metodo create trabalha com arrays
+            //o metodo save trabalha com objetos
+        });
     }
 }

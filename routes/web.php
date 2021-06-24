@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/model', function (){
+
+
+    //produtos loja
+    $loja = \App\Store::find(2);
+
+    return $loja->products()->where('id', 2)->get(); //retorna uma collection
+
+
+//    return $user->store; //1:1 retorna o objeto unico | retorna a loja do usuario 41
+});
