@@ -52,7 +52,7 @@ class StoreController extends Controller
         return redirect('/admin/stores');
     }
 
-    public function delete($id){
+    public function destroy($id){
         $products = \App\Product::where('store_id', $id)->delete();
         $store = \App\Store::find($id)->delete();
 

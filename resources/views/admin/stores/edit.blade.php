@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-    <form action="{{route('admin.stores.update', ['id' => $stores['id']])}}" method="post">
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <form action="{{route('admin.stores.update', ['store' => $stores['id']])}}" method="post">
+        @csrf
 
         <div class="form-group">
             <label>Nome Loja:</label>

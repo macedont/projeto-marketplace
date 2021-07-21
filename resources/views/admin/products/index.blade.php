@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-md-12 mt-2">
-            <a href="{{route('admin.stores.create')}}" class="btn btn-lg btn-success" target="_blank"><i class="fa fa-plus"></i> Adicionar</a>
+            <a href="{{route('admin.products.create')}}" class="btn btn-lg btn-success" target="_blank"><i class="fa fa-plus"></i> Adicionar</a>
         </div>
         <div class="col-md-12">
             <table class="table table-hover">
@@ -12,26 +12,24 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Telefone</th>
-                    <th>Celular</th>
+                    <th>Loja</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                @foreach ($stores as $store)
+                @foreach ($products as $product)
                     <tr>
-                        <td>{{$store->id}}</td>
-                        <td>{{$store->name}}</td>
-                        <td>{{$store->description}}</td>
-                        <td>{{$store->phone}}</td>
-                        <td>{{$store->mobile_phone}}</td>
+                        <td>{{$product->id}}</td>
+                        <td>{{$product->store->name}}</td>
+                        <td>{{$product->name}}</td>
+                        <td>R$ {{number_format($product->price, 2,',', '.')}}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{route('admin.stores.edit', ['store' => $store->id])}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                <form action="{{route('admin.stores.destroy', ['store' => $store->id])}}" method="post">
+                                <a href="{{route('admin.products.edit', ["product" => $product->id])}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                <form action="{{route('admin.products.destroy', ["product" => $product->id])}}" method="post">
                                     @csrf
                                     @method("DELETE")
                                     <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
@@ -43,7 +41,7 @@
                 </tbody>
 
             </table>
-            {{$stores->links()}}
+            {{$products->links()}}
         </div>
     </div>
 @endsection
