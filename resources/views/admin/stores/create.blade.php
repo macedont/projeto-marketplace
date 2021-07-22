@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Criar Loja</h1>
-    <form action="{{route('admin.stores.add')}}" method="post">
+    <form action="{{route('admin.stores.store')}}" method="post">
         @csrf
         <div class="form-group">
             <label>Nome Loja:</label>
@@ -22,16 +22,6 @@
         <div class="form-group">
             <label>Celular:</label>
             <input type="text" class="form-control" name="mobile_phone">
-        </div>
-
-        <div class="form-group">
-            <label>Usuário:</label>
-            <select name="user" class="form-control">
-                <option value="">Escolha um usuário</option>
-                @foreach($users as $user)
-                    <option value="{{$user->id}}">{{$user->name}}</option>
-                @endforeach
-            </select>
         </div>
 
         <div class="mt-3">

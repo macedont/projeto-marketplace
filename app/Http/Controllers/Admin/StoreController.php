@@ -15,18 +15,20 @@ class StoreController extends Controller
     }
 
     public function create(){
-        $users = \App\User::all(['id', 'name']);
-        return view('admin.stores.create', compact('users'));
+        return view('admin.stores.create');
     }
 
-    public function add(Request $request){
+    public function store(Request $request){
         $data = $request->post();
-        $user = \App\User::find($request['user']);
+        $user = auth()->user();
 
         $slug = preg_replace('/\s/', '-', $data['name']);
         $data['slug'] = strtolower($slug);
 
-        return $user->store()->create($data); //retorna a loja criada
+        $user->store()->create($data); //retorna a loja criada comno json caso seja retornado em uma api
+
+        \flash('Loja criada com sucesso!')->success();
+        return redirect()->route('admin.stores.index');
     }
 
     public function edit($id){

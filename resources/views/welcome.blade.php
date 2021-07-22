@@ -76,6 +76,10 @@
                             <a href="{{ route('register') }}">Register</a>
                         @endif
                     @endauth
+
+                    {{--@guest()
+                        <h1>Olá convidado!</h1> usado para usuários não logado
+                    @endguest--}}
                 </div>
             @endif
 

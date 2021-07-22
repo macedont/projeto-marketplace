@@ -10,8 +10,43 @@
     <title>Marketplace</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{route('home')}}">Marketplace</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @auth()
+            <div class="collapse navbar-collapse" id="navbarNav" >
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link @if(request()->is('admin/stores')) active @endif" href="{{route('admin.stores.index')}}">Lojas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if(request()->is('admin/products')) active @endif" href="{{route('admin.products.index')}}">Produtos</a>
+                    </li>
+                </ul>
+
+                <div class="my-2 my-lg-0">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="" onclick="event.preventDefault(); document.querySelector('form.logout').submit()">Sair</a>
+                            <form action="{{route('logout')}}" class="logout" method="post" style="display: none">
+                                @csrf
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @endauth
+        </div>
+    </nav>
 
     <div class="container">
+
         @include('flash::message')
         @yield('content')
     </div>
