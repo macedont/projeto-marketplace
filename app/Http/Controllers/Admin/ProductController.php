@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
+use const http\Client\Curl\AUTH_ANY;
 
 class ProductController extends Controller
 {
@@ -32,9 +34,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $stores = \App\Store::all(['id', 'name']);
-
-        return view('admin.products.create', compact('stores'));
+        return view('admin.products.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         if($request->post()){
             $post = $request->post();
@@ -50,7 +50,7 @@ class ProductController extends Controller
 
             $post["slug"] = preg_replace('/\s/', '-', $post["name"]);
 
-            $store = \App\Store::find($post["store"]);
+            $store = auth()->user()->store;
             $store->products()->create($post);
 
             \flash('Os dados foram inseridos com sucesso!')->success();
@@ -88,7 +88,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         if($request->post()){
             $post = $request->post();

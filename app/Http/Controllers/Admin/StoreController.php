@@ -5,20 +5,29 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laracasts\Flash;
+use App\Http\Requests\StoreRequest;
+use App\Store;
 
 class StoreController extends Controller
 {
 
+    protected $store;
+
+    public function __construct(Store $store){
+        $this->store = $store;
+        $this->middleware('user.has.store')->only(['create', 'store']);
+    }
+
     public function index(){
-        $stores = \App\Store::paginate(10);
-        return view('admin.stores.index', compact('stores'));
+        $store = auth()->user()->store;
+        return view('admin.stores.index', compact('store'));
     }
 
     public function create(){
         return view('admin.stores.create');
     }
 
-    public function store(Request $request){
+    public function store(StoreRequest $request){
         $data = $request->post();
         $user = auth()->user();
 
@@ -32,11 +41,16 @@ class StoreController extends Controller
     }
 
     public function edit($id){
+        if(auth()->user()->store->id != $id){
+            \flash('Você não pode acessar esta tela.')->error();
+            return redirect()->route('admin.stores.index');
+        }
+
         $stores = \App\Store::find($id);
         return view('admin.stores.edit', compact('stores'));
     }
 
-    public function update(Request $request, $id){
+    public function update(StoreRequest $request, $id){
         if($request->post()){
             $post = $request->post();
 

@@ -6,31 +6,42 @@
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="form-group">
             <label>Nome Produto:</label>
-            <input type="text" class="form-control" name="name">
+            <input type="text" class="form-control @error('name')is-invalid @enderror" name="name" value="{{old('name')}}">
+            @error('name')
+                <div class="invalid-feedback">
+                    <p>{{$message}}</p>
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>Descrição:</label>
-            <input type="text" class="form-control" name="description">
+            <input type="text" class="form-control @error('description')is-invalid @enderror" name="description" value="{{old('description')}}">
+            @error('description')
+                <div class="invalid-feedback">
+                    <p>{{$message}}</p>
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>Conteúdo:</label>
-            <textarea name="body" class="form-control" cols="30" rows="3"></textarea>
+            <textarea name="body" class="form-control @error('body')is-invalid @enderror" cols="30" rows="3">{{old('body')}}</textarea>
+            @error('body')
+                <div class="invalid-feedback">
+                    <p>{{$message}}</p>
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>Price:</label>
-            <input type="text" class="form-control" name="price">
-        </div>
-
-        <div class="form-group">
-            <label for="stores">Lojas</label>
-            <select name="store" class="form-control" id="store">
-                @foreach($stores as $store)
-                    <option value="{{$store->id}}">{{$store->name}}</option>
-                @endforeach
-            </select>
+            <input type="text" class="form-control @error('price')is-invalid @enderror" name="price" value="{{old('price')}}">
+            @error('price')
+                <div class="invalid-feedback">
+                    <p>{{$message}}</p>
+                </div>
+            @enderror
         </div>
 
         <div class="mt-3">
