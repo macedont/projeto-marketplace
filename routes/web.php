@@ -32,6 +32,10 @@ Route::group(['middleware' => ['auth']], function (){
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
         Route::resource('products', 'ProductController');
         Route::resource('stores', 'StoreController');
+        Route::resource('categories', 'CategoryController');
+        Route::delete('photos/remove/', 'ProductPhotoController@removePhoto')->name('photo.remove');
+
+
         /*Route::prefix('stores')->name('stores.')->group(function (){
             Route::get('/', 'StoreController@index')->name('index');
             Route::get('/create', 'StoreController@create')->name('create');

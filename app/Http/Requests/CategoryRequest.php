@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name'        => 'required',
-            'description' => 'required|min:12',
-            'phone'       => 'required',
-            'mobile_phone'=> 'required',
-            'logo'        => 'image'
+            'description' => 'required|min:10'
         ];
     }
 
@@ -36,8 +33,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'required' => 'Este campo é obrigatório.',
-            'min' => 'Este campo deve ter no mínimo :min caracteres.',
-            'image' => 'Este campo só suporta arquivos de imagem.'
+            'min' => 'Este campo deve ter no minimo :min caracteres.'
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Criar Produto</h1>
-    <form action="{{route('admin.products.store')}}" method="post">
+    <form action="{{route('admin.products.store')}}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="form-group">
             <label>Nome Produto:</label>
@@ -38,6 +38,30 @@
             <label>Price:</label>
             <input type="text" class="form-control @error('price')is-invalid @enderror" name="price" value="{{old('price')}}">
             @error('price')
+                <div class="invalid-feedback">
+                    <p>{{$message}}</p>
+                </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="categories">Categorias:</label>
+            <select name="categories[]" class="form-control @error('categories')is-invalid @enderror" id="categories" multiple>
+                @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+            @error('categories')
+                <div class="invalid-feedback">
+                    <p>{{$message}}</p>
+                </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="photos">Fotos:</label>
+            <input type="file" name="photos[]" id="photos" multiple accept="image/*" class="form-control @error('photos')is-invalid @enderror">
+            @error('photos')
                 <div class="invalid-feedback">
                     <p>{{$message}}</p>
                 </div>

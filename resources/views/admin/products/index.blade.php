@@ -12,9 +12,9 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Loja</th>
                     <th>Produto</th>
                     <th>Preço</th>
+                    <th>Loja</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -23,9 +23,9 @@
                 @foreach ($products as $product)
                     <tr>
                         <td>{{$product->id}}</td>
-                        <td>{{$product->store->name}}</td>
                         <td>{{$product->name}}</td>
                         <td>R$ {{number_format($product->price, 2,',', '.')}}</td>
+                        <td>{{$product->store->name}}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="{{route('admin.products.edit', ["product" => $product->id])}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>

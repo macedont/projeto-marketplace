@@ -20,6 +20,9 @@
             <div class="collapse navbar-collapse" id="navbarNav" >
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
+                        <a class="nav-link @if(request()->is('admin/categories*')) active @endif" href="{{route('admin.categories.index')}}">Categorias</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link @if(request()->is('admin/stores*')) active @endif" href="{{route('admin.stores.index')}}">Lojas</a>
                     </li>
                     <li class="nav-item">
@@ -52,8 +55,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-        document.ready(function (){
+        $(document).ready(function (){
             $('#flash-overlay-modal').modal('show', true);
         });
     </script>

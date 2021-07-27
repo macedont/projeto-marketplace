@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <form action="{{route('admin.stores.update', ['store' => $stores['id']])}}" method="post">
+    <form action="{{route('admin.stores.update', ['store' => $stores['id']])}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -44,9 +44,24 @@
             @enderror
         </div>
 
+        <div class="form-group">
+            <img src="{{asset('storage/' . $stores['logo'])}}" alt="" class="img-fluid">
+        </div>
+
+        <div class="form-group">
+            <label for="logo">Logo:</label>
+            <input type="file" name="logo" accept="image/*" id="logo" class="form-control @error('logo')is-invalid @enderror">
+            @error('logo')
+            <div class="invalid-feedback">
+                <p>{{$message}}</p>
+            </div>
+            @enderror
+        </div>
+
         <div class="mt-3">
             <button class="btn btn-lg btn-primary" type="submit">Atualizar Dados</button>
         </div>
     </form>
+
 
 @endsection

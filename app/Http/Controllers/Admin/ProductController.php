@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use const http\Client\Curl\AUTH_ANY;
@@ -11,6 +12,7 @@ use const http\Client\Curl\AUTH_ANY;
 class ProductController extends Controller
 {
 
+    use UploadTrait;
     protected $product;
 
     public function __construct(Product $product){
@@ -22,7 +24,8 @@ class ProductController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index(){
-        $products = $this->product->paginate(10);
+        $user = auth()->user()->store;
+        $products = $user->products()->paginate(10);
 
         return view('admin.products.index', compact('products'));
     }
@@ -34,7 +37,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        $categories = \App\Category::all(['id', 'name']);
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -51,7 +55,14 @@ class ProductController extends Controller
             $post["slug"] = preg_replace('/\s/', '-', $post["name"]);
 
             $store = auth()->user()->store;
-            $store->products()->create($post);
+            $product = $store->products()->create($post);
+            $product->categories()->sync($post['categories']);
+
+            if($request->hasFile('photos')){
+                $images = $this->imageUpload($request->file('photos'), 'image');
+
+                $product->photos()->createMany($images);
+            }
 
             \flash('Os dados foram inseridos com sucesso!')->success();
         }
@@ -78,7 +89,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->product->findOrFail($id);
-        return view('admin.products.edit', compact('product'));
+        $categories = \App\Category::all(['id', 'name']);
+
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -96,8 +109,15 @@ class ProductController extends Controller
 
             $product = $this->product->find($id);
             $product->update($post);
+            $product->categories()->sync($post['categories']);
+            if($request->hasFile('photos')){
+                $images = $this->imageUpload($request->file('photos'), 'image');
+
+                $product->photos()->createMany($images);
+            }
 
             \flash('O produto foi atualizado com sucesso.')->success();
+//            \flash()->overlay('O produto foi atualizado com sucesso.','Atenção');
         }
         return redirect()->route('admin.products.index');
     }
@@ -111,9 +131,15 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = $this->product->find($id);
-        $product->delete();
+        //$product->delete();
+
+        $categories = \App\Category::where('product_id', 49);
+        dd($categories);
+        $categories->delete();
 
         \flash('O produto foi deletado com sucesso!')->warning();
         return redirect()->route('admin.products.index');
     }
+
+
 }
