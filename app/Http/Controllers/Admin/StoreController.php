@@ -21,7 +21,7 @@ class StoreController extends Controller
 
     public function __construct(Store $store){
         $this->store = $store;
-        //$this->middleware('user.has.store')->only(['create', 'store']);
+        $this->middleware('user.has.store')->only(['create', 'store']);
     }
 
     public function index(){
@@ -41,8 +41,6 @@ class StoreController extends Controller
             $data['logo'] = $this->imageUpload($request->file('logo'));
         }
 
-        $slug = preg_replace('/\s/', '-', $data['name']);
-        $data['slug'] = strtolower($slug);
         $user->store()->create($data); //retorna a loja criada comno json caso seja retornado em uma api
 
         \flash('Loja criada com sucesso!')->success();

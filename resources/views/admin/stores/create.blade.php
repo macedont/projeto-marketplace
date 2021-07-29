@@ -53,8 +53,6 @@
                 </div>
             @enderror
         </div>
-        </div>
-
         <div class="mt-3">
             <button class="btn btn-lg btn-success" type="submit">Criar Loja</button>
         </div>

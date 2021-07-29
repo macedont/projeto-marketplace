@@ -20,24 +20,26 @@
                 </thead>
 
                 <tbody>
-                @foreach ($products as $product)
-                    <tr>
-                        <td>{{$product->id}}</td>
-                        <td>{{$product->name}}</td>
-                        <td>R$ {{number_format($product->price, 2,',', '.')}}</td>
-                        <td>{{$product->store->name}}</td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="{{route('admin.products.edit', ["product" => $product->id])}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                <form action="{{route('admin.products.destroy', ["product" => $product->id])}}" method="post">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
+                @if(!empty($products))
+                    @foreach ($products as $product)
+                        <tr>
+                            <td>{{$product->id}}</td>
+                            <td>{{$product->name}}</td>
+                            <td>R$ {{number_format($product->price, 2,',', '.')}}</td>
+                            <td>{{$product->store->name}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{route('admin.products.edit', ["product" => $product->id])}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                    <form action="{{route('admin.products.destroy', ["product" => $product->id])}}" method="post">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
                 </tbody>
 
             </table>

@@ -52,8 +52,6 @@ class ProductController extends Controller
             $post = $request->post();
             $post["price"] = str_replace(',', '.', $post["price"]);
 
-            $post["slug"] = preg_replace('/\s/', '-', $post["name"]);
-
             $store = auth()->user()->store;
             $product = $store->products()->create($post);
             $product->categories()->sync($post['categories']);
@@ -105,8 +103,6 @@ class ProductController extends Controller
     {
         if($request->post()){
             $post = $request->post();
-            $post["slug"] = preg_replace('/\s/', '-',  $post["name"]);
-
             $product = $this->product->find($id);
             $product->update($post);
             $product->categories()->sync($post['categories']);

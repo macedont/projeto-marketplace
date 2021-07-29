@@ -43,7 +43,7 @@
                                 </div>
                             </td>
                         @else
-                            <td colspan="6" align="center">Não há uma loja cadastrada com o seu usuário.</td>
+                            <td colspan="7" align="center">Não há uma loja cadastrada com o seu usuário.</td>
                         @endif
                     </tr>
                 </tbody>

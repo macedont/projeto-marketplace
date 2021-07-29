@@ -49,7 +49,6 @@ class CategoryController extends Controller
     {
         if($request->post()){
             $post = $request->post();
-            $post['slug'] = preg_replace('/\s/','-', $post['name']);
             $this->category->create($post);
 
             \flash('A categoria foi inserida com sucesso.')->success();
@@ -92,7 +91,6 @@ class CategoryController extends Controller
     {
         if($request->post()){
             $post = $request->post();
-            $post['slug'] = preg_replace('/\s/', '-', $post['name']);
             $this->category->update($post);
 
             \flash('A categoria foi atualizada com sucesso.')->success();
